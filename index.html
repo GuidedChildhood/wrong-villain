@@ -1172,7 +1172,7 @@ body {
     </div>
     <div class="signup-hero-right">
       <div class="signup-form-box">
-        <form action="https://thesocialbillboard.us8.list-manage.com/subscribe/post?u=38fa42c1e7651378e8a2bb7e1&amp;id=006d17e1f0" method="post" target="_blank" onsubmit="setTimeout(function(){document.getElementById('signup-thanks').style.display='block';},400);">
+        <form action="https://thesocialbillboard.us8.list-manage.com/subscribe/post?u=38fa42c1e7651378e8a2bb7e1&amp;id=006d17e1f0" method="post" target="_self">
           <div class="sfu-field">
             <label for="sfu-email">Email address *</label>
             <input type="email" name="EMAIL" id="sfu-email" required placeholder="your@email.com">
@@ -1186,9 +1186,8 @@ body {
           </div>
           <button type="submit" class="sfu-btn">Get Free Access + Updates →</button>
         </form>
-        <div id="signup-thanks" style="display:none;margin-top:12px;padding:12px 16px;background:rgba(92,122,104,.15);border-left:3px solid var(--sage);border-radius:0 8px 8px 0;">
-          <p style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:4px;">You're in — check your inbox.</p>
-          <p style="font-size:12px;color:var(--warm-mid);">Now scroll down to explore 54 years of data. The tool is free to use below.</p>
+        <div id="signup-note" style="margin-top:12px;padding:12px 16px;background:rgba(92,122,104,.10);border-left:3px solid var(--sage);border-radius:0 8px 8px 0;">
+          <p style="font-size:12px;color:var(--warm-mid);">After you submit, Mailchimp will confirm your signup. Then come back and explore the free data tool below.</p>
         </div>
         <p style="font-size:10px;color:var(--warm-mid);margin-top:10px;font-family:var(--ff-mono);text-align:center;">Free. No spam. Unsubscribe any time.</p>
         <p style="text-align:center;margin-top:6px;">
@@ -1667,6 +1666,39 @@ function showToast(title,body,cb){
 function closeToast(){document.getElementById('toast').classList.remove('show');}
 
 
+
+
+function handleMcSubmit(){
+  const email = document.getElementById('mc_email') ? document.getElementById('mc_email').value.trim() : '';
+  const fname = document.getElementById('mc_fname') ? document.getElementById('mc_fname').value.trim() : '';
+  if(!email){ alert('Please enter your email address.'); return; }
+
+  const form = document.createElement('form');
+  form.method = 'post';
+  form.action = 'https://thesocialbillboard.us8.list-manage.com/subscribe/post?u=38fa42c1e7651378e8a2bb7e1&id=006d17e1f0';
+  form.target = '_self';
+
+  const emailInput = document.createElement('input');
+  emailInput.type = 'hidden';
+  emailInput.name = 'EMAIL';
+  emailInput.value = email;
+  form.appendChild(emailInput);
+
+  const fnameInput = document.createElement('input');
+  fnameInput.type = 'hidden';
+  fnameInput.name = 'FNAME';
+  fnameInput.value = fname;
+  form.appendChild(fnameInput);
+
+  const botInput = document.createElement('input');
+  botInput.type = 'hidden';
+  botInput.name = 'b_38fa42c1e7651378e8a2bb7e1_006d17e1f0';
+  botInput.value = '';
+  form.appendChild(botInput);
+
+  document.body.appendChild(form);
+  form.submit();
+}
 
 buildBars();buildCauses();render(0);
 
