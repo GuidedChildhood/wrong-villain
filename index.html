@@ -1594,34 +1594,24 @@ function closeModalAndPlay(){
   window._hasPlayed=true;
   play();
 }
-function handleMcSubmit(e){
+function handleMcSubmit(){
   var email = document.getElementById('mc_email').value.trim();
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  var errEl = document.getElementById('mc_error');
+  var fname = document.getElementById('mc_fname').value.trim();
 
-  if(!email || !emailRegex.test(email)){
-    e.preventDefault();
-    errEl.textContent = 'Please enter a valid email address.';
-    errEl.style.display = 'block';
-    return false;
+  // Build Mailchimp hosted page URL with pre-filled email if provided
+  var base = 'https://mailchi.mp/be8fc2e8e0fd/newsletter';
+  var url = base;
+  if(email){
+    url = base + '?EMAIL=' + encodeURIComponent(email);
+    if(fname) url += '&FNAME=' + encodeURIComponent(fname);
   }
 
-  errEl.style.display = 'none';
+  // Open Mailchimp hosted page in new tab — this is guaranteed to work
+  window.open(url, '_blank');
 
-  // Open a small popup window for Mailchimp to handle
-  var w = 600; var h = 500;
-  var left = (screen.width/2)-(w/2);
-  var top = (screen.height/2)-(h/2);
-  window.open('','mc_popup','width='+w+',height='+h+',top='+top+',left='+left);
-
-  // Show success state on this page after brief delay
-  setTimeout(function(){
-    document.getElementById('modalFormWrap').style.display='none';
-    document.getElementById('modalSuccess').style.display='block';
-  }, 500);
-
-  // Form submits to popup window — don't prevent default
-  return true;
+  // Show success state immediately on this page
+  document.getElementById('modalFormWrap').style.display='none';
+  document.getElementById('modalSuccess').style.display='block';
 }
 
 function showMailchimpSuccess(){
@@ -1651,25 +1641,13 @@ function actuallyPlay(){
       <div class="modal-magnet"><span class="modal-magnet-arrow">→</span><span>Early access to the Social Media History Checker</span></div>
     </div>
 
-    <!-- Mailchimp form — posts directly to Mailchimp hosted form in new tab -->
+    <!-- Direct link to working Mailchimp hosted page -->
     <div id="modalFormWrap">
-      <form class="modal-form"
-            id="mc_form"
-            action="https://us8.list-manage.com/subscribe/post?u=38fa42c1e7651378e8a2bb7e1&id=006d17e1f0"
-            method="POST"
-            target="mc_popup"
-            onsubmit="handleMcSubmit(event)">
-        <input type="hidden" name="u" value="38fa42c1e7651378e8a2bb7e1">
-        <input type="hidden" name="id" value="006d17e1f0">
-        <input type="email" name="EMAIL" id="mc_email" class="modal-input" placeholder="Your email address" required>
-        <input type="text" name="FNAME" id="mc_fname" class="modal-input" placeholder="First name">
-        <!-- Honeypot -->
-        <div style="position:absolute;left:-5000px" aria-hidden="true">
-          <input type="text" name="b_38fa42c1e7651378e8a2bb7e1_006d17e1f0" tabindex="-1" value="">
-        </div>
-        <button type="submit" id="mc_submit_btn" class="modal-submit">Get Free Access + Updates</button>
-      </form>
-      <p id="mc_error" style="color:#B85C38;font-size:11px;margin-top:6px;display:none;font-family:var(--ff-mono)"></p>
+      <div class="modal-form">
+        <input type="email" id="mc_email" class="modal-input" placeholder="Your email address (optional)">
+        <input type="text" id="mc_fname" class="modal-input" placeholder="First name (optional)">
+        <button type="button" id="mc_submit_btn" class="modal-submit" onclick="handleMcSubmit()">Get Free Access + Updates</button>
+      </div>
       <p class="modal-fine-print">Free. No spam. Unsubscribe any time. We follow the evidence — we never sell your data.</p>
     </div>
 
