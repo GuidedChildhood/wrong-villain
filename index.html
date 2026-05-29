@@ -1594,14 +1594,67 @@ function closeModalAndPlay(){
   window._hasPlayed=true;
   play();
 }
-function handleModalSubmit(e){
-  // Submit goes to hidden iframe — page stays put
-  // Show success state after brief delay
-  setTimeout(()=>{
-    document.getElementById('modalFormWrap').style.display='none';
-    document.getElementById('modalSuccess').style.display='block';
-  },800);
+function submitToMailchimp(){
+  var email = document.getElementById('mc_email').value.trim();
+  var fname = document.getElementById('mc_fname').value.trim();
+  var errEl = document.getElementById('mc_error');
+
+  // Basic email validation
+  if(!email || !email.includes('@') || !email.includes('.')){
+    errEl.style.display='block';
+    errEl.textContent='Please enter a valid email address.';
+    return;
+  }
+  errEl.style.display='none';
+
+  // Disable button to prevent double submit
+  var btn = document.querySelector('.modal-submit');
+  btn.textContent='Sending...';
+  btn.disabled=true;
+
+  // Build JSONP URL — /post-json endpoint with c= callback param
+  var url = 'https://us8.list-manage.com/subscribe/post-json?u=38fa42c1e7651378e8a2bb7e1&id=006d17e1f0';
+  url += '&EMAIL=' + encodeURIComponent(email);
+  url += '&FNAME=' + encodeURIComponent(fname);
+  url += '&c=mailchimpCallback';
+
+  // Create script tag for JSONP
+  var script = document.createElement('script');
+  script.src = url;
+  document.head.appendChild(script);
+
+  // Timeout fallback — if no response in 6s, assume success anyway
+  window._mcTimeout = setTimeout(function(){
+    showMailchimpSuccess();
+  }, 6000);
 }
+
+function mailchimpCallback(data){
+  clearTimeout(window._mcTimeout);
+  if(data.result === 'success' || data.result === 'error' && data.msg && data.msg.toLowerCase().includes('already subscribed')){
+    showMailchimpSuccess();
+  } else {
+    var errEl = document.getElementById('mc_error');
+    errEl.style.display='block';
+    // Clean up Mailchimp's HTML error messages
+    var msg = data.msg ? data.msg.replace(/<[^>]*>/g,'') : 'Something went wrong. Please try again.';
+    if(msg.includes('already subscribed')) {
+      showMailchimpSuccess();
+      return;
+    }
+    errEl.textContent = msg;
+    var btn = document.querySelector('.modal-submit');
+    btn.textContent='Get Free Access + Updates';
+    btn.disabled=false;
+  }
+}
+
+function showMailchimpSuccess(){
+  document.getElementById('modalFormWrap').style.display='none';
+  document.getElementById('modalSuccess').style.display='block';
+}
+
+function handleModalSubmit(e){ /* legacy — not used */ }
 function actuallyPlay(){
   window._hasPlayed=true;
   play();
@@ -1623,22 +1676,14 @@ function actuallyPlay(){
       <div class="modal-magnet"><span class="modal-magnet-arrow">→</span><span>Early access to the Social Media History Checker</span></div>
     </div>
 
-    <!-- Mailchimp form — submits via hidden iframe to avoid page redirect -->
+    <!-- Mailchimp form — JSONP submission, no redirect, no CORS issues -->
     <div id="modalFormWrap">
-      <iframe name="mailchimp_target" style="display:none"></iframe>
-      <form class="modal-form" 
-            action="https://us8.list-manage.com/subscribe/post?u=38fa42c1e7651378e8a2bb7e1&id=006d17e1f0" 
-            method="post" 
-            target="mailchimp_target"
-            onsubmit="handleModalSubmit(event)">
-        <input type="email" name="EMAIL" class="modal-input" placeholder="Your email address" required>
-        <input type="text" name="FNAME" class="modal-input" placeholder="First name">
-        <!-- Mailchimp anti-bot honeypot -->
-        <div style="position:absolute;left:-5000px" aria-hidden="true">
-          <input type="text" name="b_38fa42c1e7651378e8a2bb7e1_006d17e1f0" tabindex="-1" value="">
-        </div>
-        <button type="submit" class="modal-submit">Get Free Access + Updates</button>
-      </form>
+      <div class="modal-form">
+        <input type="email" id="mc_email" class="modal-input" placeholder="Your email address">
+        <input type="text" id="mc_fname" class="modal-input" placeholder="First name">
+        <button type="button" class="modal-submit" onclick="submitToMailchimp()">Get Free Access + Updates</button>
+      </div>
+      <p id="mc_error" style="color:#B85C38;font-size:11px;margin-top:6px;display:none;font-family:var(--ff-mono)">Please enter a valid email address.</p>
       <p class="modal-fine-print">Free. No spam. Unsubscribe any time. We follow the evidence — we never sell your data.</p>
     </div>
 
