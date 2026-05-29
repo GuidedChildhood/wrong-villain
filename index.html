@@ -1152,54 +1152,156 @@ body {
 .signup-hero #mc_embed_signup { background: transparent; border: none; border-radius: 0; padding: 0; }
 .signup-hero #mc_embed_signup .mc-field-group input { background: white; border-color: var(--line); color: var(--dark); }
 
-/* Substack embed wrapper */
-.substack-embed-box {
+/* ── CLEAN SUBSTACK ACCESS HERO + SOFT GATE ── */
+.signup-hero {
+  min-height: auto;
+  padding: 44px 32px 38px;
+}
+.signup-hero-inner {
+  max-width: 1040px;
+  gap: 32px;
+  align-items: center;
+}
+.signup-hero-left {
+  flex: 1 1 420px;
+}
+.signup-hero-right {
+  flex: 0 1 410px;
+}
+.access-card {
   background: var(--card);
   border: 1px solid var(--line);
-  border-radius: 16px;
-  padding: 24px;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 18px 44px rgba(26,23,18,.06);
+}
+.access-card-title {
+  font-family: var(--ff-display);
+  font-size: 23px;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.access-card-body {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--warm-mid);
+  margin-bottom: 12px;
+}
+.substack-frame-wrap {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  min-height: 220px;
+}
+.substack-frame-wrap iframe {
+  width: 100% !important;
+  max-width: 100% !important;
+  display: block;
+}
+.access-note {
+  margin-top: 12px;
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--warm-mid);
+}
+.access-tool-button, .gate-button {
+  width: 100%;
+  margin-top: 14px;
+  padding: 14px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--dark);
+  color: var(--cream);
+  font-family: var(--ff-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: background .2s var(--ease-out), transform .15s var(--ease-out);
+}
+.access-tool-button:hover, .gate-button:hover {
+  background: var(--terra);
+  transform: translateY(-1px);
+}
+.read-link {
+  display: inline-block;
+  color: var(--terra);
+  font-size: 12px;
+  text-decoration: none;
+  margin-top: 8px;
+}
+.tool-lock {
+  max-width: 760px;
+  margin: 34px auto 42px;
+  padding: 28px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  text-align: center;
+}
+.tool-lock h3 {
+  font-family: var(--ff-display);
+  font-size: 30px;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+.tool-lock p {
+  color: var(--warm-mid);
+  font-size: 14px;
+  line-height: 1.65;
+  max-width: 600px;
+  margin: 0 auto 18px;
+}
+.gate-embed {
+  max-width: 430px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 14px;
   overflow: hidden;
 }
-.substack-embed-box iframe,
-.substack-post-embed iframe {
-  max-width: 100% !important;
+.tool-locked #viz, .tool-locked #vizNav {
+  display: none;
+}
+@media(max-width:768px){
+  .signup-hero { padding: 36px 20px; }
+  .signup-hero-inner { gap: 24px; }
+  .signup-hero-right { flex: none; width: 100%; }
+  .access-card { padding: 18px; }
 }
 
 </style>
 </head>
-<body>
+<body class="tool-locked">
 <!-- SIGNUP HERO -->
 <section class="signup-hero">
   <div class="signup-hero-inner">
     <div class="signup-hero-left">
       <div class="mc-signup-eyebrow">The Guided Digital Childhood</div>
-      <h2 class="signup-hero-headline">Start with the story. <em>Then explore the data.</em></h2>
-      <p class="signup-hero-sub">Read the Substack piece behind this project, then scroll down to explore the free 54-year interactive data tool.</p>
-      <ul class="mc-magnets" style="margin-top:16px;">
+      <h2 class="signup-hero-headline">Get the evidence update. <em>Then explore the data.</em></h2>
+      <p class="signup-hero-sub">Subscribe to The Guided Digital Childhood, then unlock the free 54-year interactive tool below. Evidence-based guidance for parents, teachers and clinicians — not panic.</p>
+      <ul class="mc-magnets" style="margin-top:14px;">
         <li>The Wrong Villain 54-year interactive data tool</li>
         <li>The Guided Digital Pathway framework</li>
-        <li>Evidence-based guidance — not panic</li>
         <li>Early access to the Social Media History Checker</li>
       </ul>
-      <p style="margin-top:20px;font-size:12px;color:rgba(26,23,18,.5);font-family:var(--ff-mono);">↓ The full data tool is free to use below — no gate.</p>
     </div>
+
     <div class="signup-hero-right">
-      <div class="signup-form-box substack-embed-box">
-        <div class="substack-post-embed">
-          <p lang="en">The Wrong Villain: Why Everything You've Been Told About the Children's Mental Health Crisis Is Pointing at the Wrong Cause. by Justin Phillips</p>
-          <p>What I built, why I built it, and what 54 years of data actually shows about the children's mental health crisis</p>
-          <a data-post-link href="https://justiniphillips.substack.com/p/the-wrong-villain-why-everything">Read on Substack</a>
+      <div class="access-card">
+        <div class="access-card-title">Subscribe to unlock</div>
+        <p class="access-card-body">Add your email in the Substack form. Then press the button below to enter the interactive tool.</p>
+        <div class="substack-frame-wrap">
+          <iframe src="https://justiniphillips.substack.com/embed" width="100%" height="220" style="border:0;background:white;" frameborder="0" scrolling="no"></iframe>
         </div>
-        <script async src="https://substack.com/embedjs/embed.js" charset="utf-8"></script>
-        <p style="text-align:center;margin-top:14px;">
-          <a href="#viz" onclick="document.getElementById('viz').scrollIntoView({behavior:'smooth'});return false;" style="color:var(--terra);text-decoration:none;font-size:11px;font-family:var(--ff-mono);">or go straight to the data ↓</a>
-        </p>
+        <button class="access-tool-button" onclick="unlockTool()">I’ve subscribed — enter the tool ↓</button>
+        <a class="read-link" href="https://justiniphillips.substack.com/p/the-wrong-villain-why-everything" target="_blank" rel="noopener">Read the full article on Substack →</a>
+        <p class="access-note">Substack handles the email collection. This is a soft gate because Substack does not send confirmation back to this page.</p>
       </div>
     </div>
   </div>
 </section>
-
-
 
 <!-- HERO -->
 <section class="hero">
@@ -1213,7 +1315,7 @@ body {
     54 years of data on what actually drives the children's mental health crisis. The evidence as it stands. Open to revision as the science develops.
   </p>
   <div class="hero-cta-row">
-    <button class="btn-primary" onclick="document.getElementById('viz').scrollIntoView({behavior:'smooth'})">Explore the Data</button>
+    <button class="btn-primary" onclick="openAccessGate()">Explore the Data</button>
     <button class="btn-ghost" onclick="document.getElementById('explainer').scrollIntoView({behavior:'smooth'})">How to Read This</button>
   </div>
   <div class="scroll-hint">
@@ -1251,6 +1353,16 @@ body {
     <button class="phase-tab" id="tab4" onclick="setPhase(4)">How to Read This</button>
   </div>
 </nav>
+
+<!-- TOOL ACCESS GATE -->
+<div id="toolLock" class="tool-lock">
+  <h3>Subscribe to unlock the data tool</h3>
+  <p>The tool is free. Subscribe first so you can receive the follow-up evidence updates and parent guidance.</p>
+  <div class="gate-embed">
+    <iframe src="https://justiniphillips.substack.com/embed" width="100%" height="220" style="border:0;background:white;" frameborder="0" scrolling="no"></iframe>
+  </div>
+  <button class="gate-button" onclick="unlockTool()">I’ve subscribed — enter the tool</button>
+</div>
 
 <!-- VIZ SECTION -->
 <div id="viz" class="section viz-section">
@@ -1433,6 +1545,34 @@ body {
 </div>
 
 <script>
+function unlockTool(){
+  document.body.classList.remove('tool-locked');
+  localStorage.setItem('wrongVillainToolUnlocked','true');
+  const lock = document.getElementById('toolLock');
+  if(lock) lock.style.display = 'none';
+  setTimeout(function(){
+    const viz = document.getElementById('viz');
+    if(viz) viz.scrollIntoView({behavior:'smooth'});
+  },150);
+}
+function openAccessGate(){
+  const lock = document.getElementById('toolLock');
+  if(document.body.classList.contains('tool-locked') && lock){
+    lock.scrollIntoView({behavior:'smooth'});
+  } else {
+    document.getElementById('viz').scrollIntoView({behavior:'smooth'});
+  }
+}
+(function(){
+  if(localStorage.getItem('wrongVillainToolUnlocked') === 'true'){
+    document.body.classList.remove('tool-locked');
+    setTimeout(function(){
+      const lock = document.getElementById('toolLock');
+      if(lock) lock.style.display = 'none';
+    },0);
+  }
+})();
+
 const YEARS = Array.from({length:55},(_,i)=>1971+i);
 
 const BARS = [
