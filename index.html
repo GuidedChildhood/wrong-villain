@@ -1594,64 +1594,34 @@ function closeModalAndPlay(){
   window._hasPlayed=true;
   play();
 }
-// Mailchimp JSONP callback — must be on window object
-window.mailchimpCallback = function(data){
-  clearTimeout(window._mcTimeout);
-  var isSuccess = data.result === 'success';
-  var isAlready = data.result === 'error' && data.msg && data.msg.toLowerCase().indexOf('already subscribed') > -1;
-  if(isSuccess || isAlready){
-    showMailchimpSuccess();
-  } else {
-    var errEl = document.getElementById('mc_error');
-    var msg = data.msg ? data.msg.replace(/<[^>]*>/g,'').replace(/[0-9]+ - /,'').trim() : 'Please try again.';
-    errEl.textContent = msg;
-    errEl.style.display = 'block';
-    var btn = document.getElementById('mc_submit_btn');
-    if(btn){ btn.textContent='Get Free Access + Updates'; btn.disabled=false; }
-  }
-};
-
-function submitToMailchimp(){
+function handleMcSubmit(e){
   var email = document.getElementById('mc_email').value.trim();
-  var fname = document.getElementById('mc_fname').value.trim();
+  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var errEl = document.getElementById('mc_error');
 
-  // Validate
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if(!email || !emailRegex.test(email)){
+    e.preventDefault();
     errEl.textContent = 'Please enter a valid email address.';
     errEl.style.display = 'block';
-    return;
+    return false;
   }
+
   errEl.style.display = 'none';
 
-  // Update button
-  var btn = document.getElementById('mc_submit_btn');
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
+  // Open a small popup window for Mailchimp to handle
+  var w = 600; var h = 500;
+  var left = (screen.width/2)-(w/2);
+  var top = (screen.height/2)-(h/2);
+  window.open('','mc_popup','width='+w+',height='+h+',top='+top+',left='+left);
 
-  // Remove any previous JSONP script
-  var old = document.getElementById('mc_jsonp');
-  if(old) old.parentNode.removeChild(old);
+  // Show success state on this page after brief delay
+  setTimeout(function(){
+    document.getElementById('modalFormWrap').style.display='none';
+    document.getElementById('modalSuccess').style.display='block';
+  }, 500);
 
-  // Build URL — note: use post-json not post
-  var base = 'https://us8.list-manage.com/subscribe/post-json';
-  var params = 'u=38fa42c1e7651378e8a2bb7e1&id=006d17e1f0';
-  params += '&EMAIL=' + encodeURIComponent(email);
-  if(fname) params += '&FNAME=' + encodeURIComponent(fname);
-  params += '&c=mailchimpCallback';
-  params += '&_=' + Date.now(); // cache bust
-
-  var script = document.createElement('script');
-  script.id = 'mc_jsonp';
-  script.src = base + '?' + params;
-  script.onerror = function(){ showMailchimpSuccess(); }; // fallback on network error
-  document.head.appendChild(script);
-
-  // 8 second fallback
-  window._mcTimeout = setTimeout(function(){
-    showMailchimpSuccess();
-  }, 8000);
+  // Form submits to popup window — don't prevent default
+  return true;
 }
 
 function showMailchimpSuccess(){
@@ -1660,8 +1630,6 @@ function showMailchimpSuccess(){
   if(wrap) wrap.style.display='none';
   if(succ) succ.style.display='block';
 }
-
-function handleModalSubmit(e){ /* legacy */ }
 function actuallyPlay(){
   window._hasPlayed=true;
   play();
@@ -1683,14 +1651,25 @@ function actuallyPlay(){
       <div class="modal-magnet"><span class="modal-magnet-arrow">→</span><span>Early access to the Social Media History Checker</span></div>
     </div>
 
-    <!-- Mailchimp form — JSONP submission, no redirect, no CORS issues -->
+    <!-- Mailchimp form — posts directly to Mailchimp hosted form in new tab -->
     <div id="modalFormWrap">
-      <div class="modal-form">
-        <input type="email" id="mc_email" class="modal-input" placeholder="Your email address">
-        <input type="text" id="mc_fname" class="modal-input" placeholder="First name">
-        <button type="button" id="mc_submit_btn" class="modal-submit" onclick="submitToMailchimp()">Get Free Access + Updates</button>
-      </div>
-      <p id="mc_error" style="color:#B85C38;font-size:11px;margin-top:6px;display:none;font-family:var(--ff-mono)">Please enter a valid email address.</p>
+      <form class="modal-form"
+            id="mc_form"
+            action="https://us8.list-manage.com/subscribe/post"
+            method="POST"
+            target="mc_popup"
+            onsubmit="handleMcSubmit(event)">
+        <input type="hidden" name="u" value="38fa42c1e7651378e8a2bb7e1">
+        <input type="hidden" name="id" value="006d17e1f0">
+        <input type="email" name="EMAIL" id="mc_email" class="modal-input" placeholder="Your email address" required>
+        <input type="text" name="FNAME" id="mc_fname" class="modal-input" placeholder="First name">
+        <!-- Honeypot -->
+        <div style="position:absolute;left:-5000px" aria-hidden="true">
+          <input type="text" name="b_38fa42c1e7651378e8a2bb7e1_006d17e1f0" tabindex="-1" value="">
+        </div>
+        <button type="submit" id="mc_submit_btn" class="modal-submit">Get Free Access + Updates</button>
+      </form>
+      <p id="mc_error" style="color:#B85C38;font-size:11px;margin-top:6px;display:none;font-family:var(--ff-mono)"></p>
       <p class="modal-fine-print">Free. No spam. Unsubscribe any time. We follow the evidence — we never sell your data.</p>
     </div>
 
