@@ -904,190 +904,7 @@ body {
   padding: 48px 0;
 }
 
-/* ── EMAIL CAPTURE MODAL ── */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(26,23,18,0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 2000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s var(--ease-out);
-  padding: 24px;
-}
-.modal-backdrop.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-.modal-box {
-  background: var(--cream);
-  max-width: 520px;
-  width: 100%;
-  padding: 48px 44px 40px;
-  position: relative;
-  transform: translateY(20px) scale(0.97);
-  transition: transform 0.45s var(--ease-spring);
-  border-top: 4px solid var(--terra);
-  box-shadow: 0 32px 80px rgba(26,23,18,0.3);
-}
-.modal-backdrop.show .modal-box {
-  transform: translateY(0) scale(1);
-}
-.modal-skip {
-  position: absolute;
-  top: 16px; right: 18px;
-  background: none; border: none;
-  font-size: 11px;
-  font-family: var(--ff-body);
-  color: var(--warm-mid);
-  cursor: pointer;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 4px 8px;
-  transition: color 0.2s;
-}
-.modal-skip:hover { color: var(--dark); }
-.modal-eyebrow {
-  font-family: var(--ff-mono);
-  font-size: 9px;
-  letter-spacing: 3.5px;
-  text-transform: uppercase;
-  color: var(--terra);
-  margin-bottom: 14px;
-}
-.modal-headline {
-  font-family: var(--ff-display);
-  font-size: clamp(22px, 4vw, 30px);
-  font-weight: 900;
-  line-height: 1.1;
-  color: var(--dark);
-  margin-bottom: 10px;
-}
-.modal-headline em {
-  color: var(--terra);
-  font-style: italic;
-}
-.modal-sub {
-  font-size: 13px;
-  font-weight: 300;
-  color: var(--warm-mid);
-  line-height: 1.65;
-  margin-bottom: 20px;
-}
-.modal-magnets {
-  background: var(--card);
-  border-radius: 10px;
-  padding: 16px 18px;
-  margin-bottom: 24px;
-}
-.modal-magnet {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 12px;
-  color: var(--dark);
-  line-height: 1.5;
-  margin-bottom: 8px;
-  font-weight: 400;
-}
-.modal-magnet:last-child { margin-bottom: 0; }
-.modal-magnet-arrow {
-  color: var(--terra);
-  font-size: 13px;
-  flex-shrink: 0;
-  margin-top: 1px;
-  font-weight: 700;
-}
-.modal-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.modal-input {
-  width: 100%;
-  padding: 13px 16px;
-  border: 1.5px solid var(--line);
-  background: white;
-  font-family: var(--ff-body);
-  font-size: 14px;
-  font-weight: 300;
-  color: var(--dark);
-  outline: none;
-  border-radius: 8px;
-  transition: border-color 0.2s;
-  -webkit-appearance: none;
-}
-.modal-input:focus { border-color: var(--terra); }
-.modal-input::placeholder { color: var(--warm-mid); }
-.modal-submit {
-  width: 100%;
-  padding: 14px;
-  background: var(--dark);
-  color: var(--cream);
-  border: none;
-  font-family: var(--ff-body);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 100px;
-  transition: background 0.2s, transform 0.15s var(--ease-out);
-  margin-top: 4px;
-}
-.modal-submit:hover { background: var(--terra); transform: scale(1.01); }
-.modal-fine-print {
-  font-size: 10px;
-  color: var(--warm-mid);
-  text-align: center;
-  margin-top: 10px;
-  font-family: var(--ff-mono);
-  letter-spacing: 0.3px;
-}
-.modal-success {
-  text-align: center;
-  padding: 16px 0 8px;
-}
-.modal-success-icon {
-  font-size: 40px;
-  margin-bottom: 12px;
-}
-.modal-success-title {
-  font-family: var(--ff-display);
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  color: var(--dark);
-}
-.modal-success-body {
-  font-size: 13px;
-  color: var(--warm-mid);
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-.modal-success-btn {
-  background: var(--terra);
-  color: white;
-  border: none;
-  padding: 12px 32px;
-  font-family: var(--ff-body);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 100px;
-  transition: background 0.2s;
-}
-.modal-success-btn:hover { background: #a04a28; }
-@media(max-width:480px){
-  .modal-box { padding: 36px 24px 28px; }
-}
+
 </style>
 </head>
 <body>
@@ -1152,6 +969,7 @@ body {
     <div class="controls-group">
       <div class="controls-row">
         <button class="ctrl-btn" id="playBtn">▶ Play</button>
+        <button class="ctrl-btn" id="accessBtn" onclick="getAccessAndPlay()" style="background:var(--terra);">✉ Get Access + Play</button>
         <button class="ctrl-btn ghost" onclick="resetAll()">↺ Reset</button>
         <div class="speed-pill-group" id="speedGroup">
           <button class="speed-pill" data-speed="2500" onclick="setSpeed(2500)">Very Slow</button>
@@ -1518,23 +1336,7 @@ function resetAll(){
   BARS.forEach(b=>{const bh=document.getElementById('bh-'+b.k);if(bh){bh.classList.remove('show');bh.style.width='0%';}});
 }
 
-document.getElementById('playBtn').addEventListener('click',()=>{
-  if(playing){ pause(); return; }
-  // Show email modal before first play
-  if(!window._hasPlayed){
-    showEmailModal();
-  } else {
-    play();
-  }
-});
-
-function actuallyPlay(){
-  window._hasPlayed = true;
-  play();
-}
-
-// Override play button in modal
-window._hasPlayed = false;
+document.getElementById('playBtn').addEventListener('click',()=>playing?pause():play());
 document.getElementById('scrub').addEventListener('input',e=>{pause();idx=parseInt(e.target.value);render(idx);});
 document.getElementById('spd').addEventListener('change',()=>{if(playing){pause();play();}});
 
@@ -1573,64 +1375,21 @@ function showToast(title,body,cb){
 }
 function closeToast(){document.getElementById('toast').classList.remove('show');}
 
+function getAccessAndPlay(){
+  // Open Mailchimp signup in new tab
+  window.open('https://mailchi.mp/be8fc2e8e0fd/newsletter', '_blank');
+  // Start playing immediately — don't make them wait
+  if(!playing) play();
+  // Hide the access button after first click
+  var btn = document.getElementById('accessBtn');
+  if(btn) btn.style.display = 'none';
+}
+
 buildBars();buildCauses();render(0);
 
-// Email modal functions
-function showEmailModal(){
-  document.getElementById('emailModal').classList.add('show');
-  document.body.style.overflow='hidden';
-}
-function closeModal(){
-  document.getElementById('emailModal').classList.remove('show');
-  document.body.style.overflow='';
-}
-function skipModal(){
-  closeModal();
-  window._hasPlayed=true;
-  play();
-}
-function closeModalAndPlay(){
-  closeModal();
-  window._hasPlayed=true;
-  play();
-}
-function handleMcSubmit(){
-  var email = document.getElementById('mc_email').value.trim();
-  var fname = document.getElementById('mc_fname').value.trim();
 
-  // Build Mailchimp hosted page URL with pre-filled email if provided
-  var base = 'https://mailchi.mp/be8fc2e8e0fd/newsletter';
-  var url = base;
-  if(email){
-    url = base + '?EMAIL=' + encodeURIComponent(email);
-    if(fname) url += '&FNAME=' + encodeURIComponent(fname);
-  }
-
-  // Open Mailchimp hosted page in new tab — this is guaranteed to work
-  window.open(url, '_blank');
-
-  // Show success state immediately on this page
-  document.getElementById('modalFormWrap').style.display='none';
-  document.getElementById('modalSuccess').style.display='block';
-}
-
-function showMailchimpSuccess(){
-  var wrap = document.getElementById('modalFormWrap');
-  var succ = document.getElementById('modalSuccess');
-  if(wrap) wrap.style.display='none';
-  if(succ) succ.style.display='block';
-}
-function actuallyPlay(){
-  window._hasPlayed=true;
-  play();
-}
 </script>
 
-<!-- EMAIL CAPTURE MODAL -->
-<div class="modal-backdrop" id="emailModal">
-  <div class="modal-box">
-    <button class="modal-skip" onclick="skipModal()">Skip →</button>
-    <div class="modal-eyebrow">The Guided Digital Childhood</div>
     <div class="modal-headline">Get <em>free access</em> to the tool + updates</div>
     <p class="modal-sub">Join 336+ parents, teachers, and clinicians already getting evidence-based guidance — not panic.</p>
     <div class="modal-magnets">
