@@ -968,9 +968,8 @@ body {
     <div class="year-big" id="yrBig">1971</div>
     <div class="controls-group">
       <div class="controls-row">
-        <button class="ctrl-btn" id="playBtn" style="background:var(--terra);" onclick="signupAndPlay()">✉ Sign Up — Get Access + Updates</button>
-        <button class="ctrl-btn ghost" id="skipBtn" onclick="skipAndPlay()" style="font-size:11px;opacity:0.6;">or explore the data first →</button>
-        <button class="ctrl-btn ghost" id="resetBtn" onclick="resetAll()" style="display:none;">↺ Reset</button>
+        <button class="ctrl-btn" id="playBtn">▶ Play</button>
+        <button class="ctrl-btn ghost" onclick="resetAll()">↺ Reset</button>
         <div class="speed-pill-group" id="speedGroup">
           <button class="speed-pill" data-speed="2500" onclick="setSpeed(2500)">Very Slow</button>
           <button class="speed-pill" data-speed="1500" onclick="setSpeed(1500)">Slow</button>
@@ -1336,12 +1335,7 @@ function resetAll(){
   BARS.forEach(b=>{const bh=document.getElementById('bh-'+b.k);if(bh){bh.classList.remove('show');bh.style.width='0%';}});
 }
 
-// playBtn is now the signup CTA — listener handled inline
-// Keep pause functionality if already playing
-document.getElementById('playBtn').addEventListener('click', function(){
-  if(playing){ pause(); return; }
-  // signupAndPlay handles it
-});
+document.getElementById('playBtn').addEventListener('click',()=>playing?pause():play());
 document.getElementById('scrub').addEventListener('input',e=>{pause();idx=parseInt(e.target.value);render(idx);});
 document.getElementById('spd').addEventListener('change',()=>{if(playing){pause();play();}});
 
@@ -1380,28 +1374,7 @@ function showToast(title,body,cb){
 }
 function closeToast(){document.getElementById('toast').classList.remove('show');}
 
-function signupAndPlay(){
-  if(playing){ pause(); return; }
-  // Open Mailchimp in new tab
-  window.open('https://mailchi.mp/be8fc2e8e0fd/newsletter', '_blank');
-  // Start playing
-  unlockTool();
-}
 
-function skipAndPlay(){
-  unlockTool();
-}
-
-function unlockTool(){
-  // Swap buttons — hide signup, show pause+reset
-  document.getElementById('playBtn').textContent = '⏸ Pause';
-  document.getElementById('playBtn').style.background = 'var(--dark)';
-  document.getElementById('playBtn').onclick = function(){ playing ? pause() : play(); };
-  document.getElementById('skipBtn').style.display = 'none';
-  document.getElementById('resetBtn').style.display = 'block';
-  // Start animation
-  if(!playing) play();
-}
 
 buildBars();buildCauses();render(0);
 
