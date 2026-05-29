@@ -1151,6 +1151,20 @@ body {
 /* Override Mailchimp dark form styles in hero */
 .signup-hero #mc_embed_signup { background: transparent; border: none; border-radius: 0; padding: 0; }
 .signup-hero #mc_embed_signup .mc-field-group input { background: white; border-color: var(--line); color: var(--dark); }
+
+/* Substack embed wrapper */
+.substack-embed-box {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 24px;
+  overflow: hidden;
+}
+.substack-embed-box iframe,
+.substack-post-embed iframe {
+  max-width: 100% !important;
+}
+
 </style>
 </head>
 <body>
@@ -1159,38 +1173,25 @@ body {
   <div class="signup-hero-inner">
     <div class="signup-hero-left">
       <div class="mc-signup-eyebrow">The Guided Digital Childhood</div>
-      <h2 class="signup-hero-headline">Sign up for <em>free access</em> and stay updated as the evidence develops.</h2>
-      <p class="signup-hero-sub">Join parents, teachers, and clinicians getting evidence-based guidance — not panic. Sign up below then scroll down to explore 54 years of data.</p>
+      <h2 class="signup-hero-headline">Start with the story. <em>Then explore the data.</em></h2>
+      <p class="signup-hero-sub">Read the Substack piece behind this project, then scroll down to explore the free 54-year interactive data tool.</p>
       <ul class="mc-magnets" style="margin-top:16px;">
         <li>The Wrong Villain 54-year interactive data tool</li>
         <li>The Guided Digital Pathway framework</li>
-        <li>Free starter pack for your child's age and stage</li>
-        <li>Weekly newsletter — evidence, not panic</li>
+        <li>Evidence-based guidance — not panic</li>
         <li>Early access to the Social Media History Checker</li>
       </ul>
       <p style="margin-top:20px;font-size:12px;color:rgba(26,23,18,.5);font-family:var(--ff-mono);">↓ The full data tool is free to use below — no gate.</p>
     </div>
     <div class="signup-hero-right">
-      <div class="signup-form-box">
-        <form action="https://thesocialbillboard.us8.list-manage.com/subscribe/post?u=38fa42c1e7651378e8a2bb7e1&amp;id=006d17e1f0" method="post" target="_self">
-          <div class="sfu-field">
-            <label for="sfu-email">Email address *</label>
-            <input type="email" name="EMAIL" id="sfu-email" required placeholder="your@email.com">
-          </div>
-          <div class="sfu-field">
-            <label for="sfu-fname">First name</label>
-            <input type="text" name="FNAME" id="sfu-fname" placeholder="Your first name">
-          </div>
-          <div aria-hidden="true" style="position:absolute;left:-5000px">
-            <input type="text" name="b_38fa42c1e7651378e8a2bb7e1_006d17e1f0" tabindex="-1" value="">
-          </div>
-          <button type="submit" class="sfu-btn">Get Free Access + Updates →</button>
-        </form>
-        <div id="signup-note" style="margin-top:12px;padding:12px 16px;background:rgba(92,122,104,.10);border-left:3px solid var(--sage);border-radius:0 8px 8px 0;">
-          <p style="font-size:12px;color:var(--warm-mid);">After you submit, Mailchimp will confirm your signup. Then come back and explore the free data tool below.</p>
+      <div class="signup-form-box substack-embed-box">
+        <div class="substack-post-embed">
+          <p lang="en">The Wrong Villain: Why Everything You've Been Told About the Children's Mental Health Crisis Is Pointing at the Wrong Cause. by Justin Phillips</p>
+          <p>What I built, why I built it, and what 54 years of data actually shows about the children's mental health crisis</p>
+          <a data-post-link href="https://justiniphillips.substack.com/p/the-wrong-villain-why-everything">Read on Substack</a>
         </div>
-        <p style="font-size:10px;color:var(--warm-mid);margin-top:10px;font-family:var(--ff-mono);text-align:center;">Free. No spam. Unsubscribe any time.</p>
-        <p style="text-align:center;margin-top:6px;">
+        <script async src="https://substack.com/embedjs/embed.js" charset="utf-8"></script>
+        <p style="text-align:center;margin-top:14px;">
           <a href="#viz" onclick="document.getElementById('viz').scrollIntoView({behavior:'smooth'});return false;" style="color:var(--terra);text-decoration:none;font-size:11px;font-family:var(--ff-mono);">or go straight to the data ↓</a>
         </p>
       </div>
@@ -1668,72 +1669,9 @@ function closeToast(){document.getElementById('toast').classList.remove('show');
 
 
 
-function handleMcSubmit(){
-  const email = document.getElementById('mc_email') ? document.getElementById('mc_email').value.trim() : '';
-  const fname = document.getElementById('mc_fname') ? document.getElementById('mc_fname').value.trim() : '';
-  if(!email){ alert('Please enter your email address.'); return; }
-
-  const form = document.createElement('form');
-  form.method = 'post';
-  form.action = 'https://thesocialbillboard.us8.list-manage.com/subscribe/post?u=38fa42c1e7651378e8a2bb7e1&id=006d17e1f0';
-  form.target = '_self';
-
-  const emailInput = document.createElement('input');
-  emailInput.type = 'hidden';
-  emailInput.name = 'EMAIL';
-  emailInput.value = email;
-  form.appendChild(emailInput);
-
-  const fnameInput = document.createElement('input');
-  fnameInput.type = 'hidden';
-  fnameInput.name = 'FNAME';
-  fnameInput.value = fname;
-  form.appendChild(fnameInput);
-
-  const botInput = document.createElement('input');
-  botInput.type = 'hidden';
-  botInput.name = 'b_38fa42c1e7651378e8a2bb7e1_006d17e1f0';
-  botInput.value = '';
-  form.appendChild(botInput);
-
-  document.body.appendChild(form);
-  form.submit();
-}
-
 buildBars();buildCauses();render(0);
 
 
 </script>
-
-    <div class="modal-headline">Get <em>free access</em> to the tool + updates</div>
-    <p class="modal-sub">Join 336+ parents, teachers, and clinicians already getting evidence-based guidance — not panic.</p>
-    <div class="modal-magnets">
-      <div class="modal-magnet"><span class="modal-magnet-arrow">→</span><span>The Wrong Villain: 54-year interactive data tool</span></div>
-      <div class="modal-magnet"><span class="modal-magnet-arrow">→</span><span>The Guided Digital Pathway framework</span></div>
-      <div class="modal-magnet"><span class="modal-magnet-arrow">→</span><span>Free starter pack for your child's age and stage</span></div>
-      <div class="modal-magnet"><span class="modal-magnet-arrow">→</span><span>Weekly newsletter — evidence, not panic</span></div>
-      <div class="modal-magnet"><span class="modal-magnet-arrow">→</span><span>Early access to the Social Media History Checker</span></div>
-    </div>
-
-    <!-- Direct link to working Mailchimp hosted page -->
-    <div id="modalFormWrap">
-      <div class="modal-form">
-        <input type="email" id="mc_email" class="modal-input" placeholder="Your email address (optional)">
-        <input type="text" id="mc_fname" class="modal-input" placeholder="First name (optional)">
-        <button type="button" id="mc_submit_btn" class="modal-submit" onclick="handleMcSubmit()">Get Free Access + Updates</button>
-      </div>
-      <p class="modal-fine-print">Free. No spam. Unsubscribe any time. We follow the evidence — we never sell your data.</p>
-    </div>
-
-    <!-- Success state -->
-    <div id="modalSuccess" class="modal-success" style="display:none">
-      <div class="modal-success-icon">✓</div>
-      <div class="modal-success-title">You're in.</div>
-      <p class="modal-success-body">Check your inbox for the starter pack. The data tool is unlocking now — press Play when you're ready.</p>
-      <button class="modal-success-btn" onclick="closeModalAndPlay()">Start the tool →</button>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>
