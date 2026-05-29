@@ -1595,10 +1595,12 @@ function closeModalAndPlay(){
   play();
 }
 function handleModalSubmit(e){
+  // Submit goes to hidden iframe — page stays put
+  // Show success state after brief delay
   setTimeout(()=>{
     document.getElementById('modalFormWrap').style.display='none';
     document.getElementById('modalSuccess').style.display='block';
-  },400);
+  },800);
 }
 function actuallyPlay(){
   window._hasPlayed=true;
@@ -1621,12 +1623,13 @@ function actuallyPlay(){
       <div class="modal-magnet"><span class="modal-magnet-arrow">→</span><span>Early access to the Social Media History Checker</span></div>
     </div>
 
-    <!-- Mailchimp form -->
+    <!-- Mailchimp form — submits via hidden iframe to avoid page redirect -->
     <div id="modalFormWrap">
+      <iframe name="mailchimp_target" style="display:none"></iframe>
       <form class="modal-form" 
-            action="https://us8.list-manage.com/subscribe/post?u=38fa42c1e7651378e8a2bb7e1&amp;id=006d17e1f0" 
+            action="https://us8.list-manage.com/subscribe/post?u=38fa42c1e7651378e8a2bb7e1&id=006d17e1f0" 
             method="post" 
-            target="_blank"
+            target="mailchimp_target"
             onsubmit="handleModalSubmit(event)">
         <input type="email" name="EMAIL" class="modal-input" placeholder="Your email address" required>
         <input type="text" name="FNAME" class="modal-input" placeholder="First name">
